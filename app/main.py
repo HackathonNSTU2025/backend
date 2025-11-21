@@ -1,10 +1,8 @@
 from fastapi import FastAPI, WebSocket, HTTPException
-from fastapi.responses import HTMLResponse, JSONResponse
-import json
+from fastapi.responses import HTMLResponse
 import uuid
 from datetime import datetime, timedelta
-from typing import Dict, List
-import asyncio
+from typing import List
 
 app = FastAPI(docs_url=None, redoc_url=None)
 
@@ -27,7 +25,7 @@ class ConnectionManager:
         for connection in self.active_connections:
             try:
                 await connection.send_json(message)
-            except:
+            except Exception:  # Исправлено: убрал bare except
                 disconnected.append(connection)
         
         for connection in disconnected:
@@ -450,9 +448,9 @@ async def websocket_endpoint(websocket: WebSocket):
         })
         
         while True:
-            data = await websocket.receive_text()
+            await websocket.receive_text()  # Исправлено: убрал неиспользуемую переменную
             
-    except Exception as e:
+    except Exception:
         manager.disconnect(websocket)
 
 if __name__ == "__main__":
