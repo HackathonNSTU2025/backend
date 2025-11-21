@@ -7,7 +7,7 @@ down:
 	docker compose -f ./deploy/docker-compose.yml down
 
 lint:
-	uvx ruff check
+	uvx ruff check ./app/
 
 update:
 	uv sync -U
