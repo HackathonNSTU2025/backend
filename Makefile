@@ -1,7 +1,10 @@
 .SILENT:
 
-run:
-	uvicorn app.main:app --reload --port 8000
+up:
+	docker compose -f ./deploy/docker-compose.yml up --build
+
+down:
+	docker compose -f ./deploy/docker-compose.yml down
 
 lint:
 	uvx ruff check
