@@ -16,7 +16,7 @@ services:
             - "5432:5432"
         env_file: .env
         volumes:
-            - /var/lib/postgresql/data/:/var/lib/postgresql/data/
+            - pgdata:/var/lib/postgresql/data/
         restart: always
 
     pgadmin:
@@ -24,6 +24,12 @@ services:
         ports:
             - "8080:80"
         env_file: .env
+        volumes:
+            - pgadmin-data:/var/lib/pgadmin
         depends_on:
             - db
         restart: always
+
+volumes:
+    pgdata:
+    pgadmin-data:
