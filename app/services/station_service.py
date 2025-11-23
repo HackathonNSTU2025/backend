@@ -1,3 +1,6 @@
+from typing import Optional
+
+from app.models.queue import Queue
 from app.models.station import Station, StationCreate
 from app.repositories.station_repository import StationRepository
 
@@ -13,3 +16,6 @@ class StationService:
             description=data.description,
         )
         return await self.repository.create(station_data)
+
+    async def get_least_loaded_queue(self, station_id: int) -> Optional[Queue]:
+        return await self.repository.get_least_loaded_queue(station_id)

@@ -9,6 +9,6 @@ class QueueEntryService:
     async def create(self, data: QueueEntryCreate) -> QueueEntry:
         queue_entry_data = QueueEntryCreate(
             user_id=data.user_id,
-            queue_id=data.queue_id,
+            station_id=data.station_id,
         )
         return await self.repository.create(queue_entry_data)

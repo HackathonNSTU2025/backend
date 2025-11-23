@@ -3,6 +3,7 @@ from typing import Optional
 import asyncpg
 
 from app.misc.read_sql_query import read_sql_query
+from app.models.queue import Queue
 from app.models.station import Station, StationCreate
 
 DOMAIN = "stations"
@@ -37,3 +38,11 @@ class StationRepository:
                 event_id,
             )
             return [Station(**dict(row)) for row in rows]
+
+    async def get_least_loaded_queue(self, station_id: int) -> Optional[Queue]:
+        async with self.pool.acquire() as conn:
+            row = await conn.fetchrow(
+                read_sql_query(DOMAIN, "get_least_loaded_queue"),
+                station_id,
+            )
+            return Queue(**dict(row))
