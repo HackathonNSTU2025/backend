@@ -1,6 +1,7 @@
 from contextlib import asynccontextmanager
 
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
 
 from app.database import get_pool
@@ -29,6 +30,14 @@ app.include_router(stations_router)
 app.include_router(users_router)
 app.mount("/static", StaticFiles(directory=settings.static_dir), name="static")
 
+# Настройка CORS
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # любые домены
+    allow_credentials=True,
+    allow_methods=["*"],  # все HTTP-методы
+    allow_headers=["*"],  # все заголовки
+)
 
 if __name__ == "__main__":
     import uvicorn
