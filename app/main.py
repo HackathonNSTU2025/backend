@@ -5,6 +5,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
 
 from app.database import get_pool
+from app.routes.auth import router as auth_router
 from app.routes.events import router as events_router
 from app.routes.queue_entries import router as queue_entries_router
 from app.routes.queues import router as queues_router
@@ -23,6 +24,7 @@ async def lifespan(app: FastAPI):
 
 
 app = FastAPI(lifespan=lifespan)
+app.include_router(auth_router)
 app.include_router(events_router)
 app.include_router(queue_entries_router)
 app.include_router(queues_router)

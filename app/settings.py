@@ -27,6 +27,7 @@ class Settings(BaseSettings):
     host: str = "0.0.0.0"
     port: int = 8000
     database_dsn: str = mustgetenv("DATABASE_DSN")
+    jwt_secret_key: str = mustgetenv("JWT_SECRET_KEY")
     migrations_dir: str = "./app/sql/migrations/"
     queries_dir: str = "./app/sql/queries/"
     static_dir: str = "./data/static/"
