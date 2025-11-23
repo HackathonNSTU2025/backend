@@ -6,9 +6,12 @@ services:
         ports:
             - "8000:8000"
         env_file: .env
+        volumes:
+            - ../data/:/data/
         depends_on:
-            - db
-        restart: always
+            db:
+                condition: service_healthy
+        # restart: always
 
     db:
         image: postgres:18-alpine3.22
@@ -16,8 +19,16 @@ services:
             - "5432:5432"
         env_file: .env
         volumes:
-            - pgdata:/var/lib/postgresql/data/
-        restart: always
+            - postgres-data:/var/lib/postgresql/data/
+        # restart: always
+        healthcheck:
+            test:
+                [
+                    "CMD-SHELL",
+                    "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}",
+                ]
+            interval: 5s
+            retries: 5
 
     pgadmin:
         image: dpage/pgadmin4:9.10
@@ -26,10 +37,8 @@ services:
         env_file: .env
         volumes:
             - pgadmin-data:/var/lib/pgadmin
-        depends_on:
-            - db
-        restart: always
+        # restart: always
 
 volumes:
-    pgdata:
+    postgres-data:
     pgadmin-data:

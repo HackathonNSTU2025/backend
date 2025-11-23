@@ -1,7 +1,8 @@
 .SILENT:
 
 up:
-	docker compose -f ./deploy/docker-compose.yml up --build
+	docker compose -f ./deploy/docker-compose.yml up --build -d
+	docker compose -f ./deploy/docker-compose.yml logs -f app
 
 down:
 	docker compose -f ./deploy/docker-compose.yml down

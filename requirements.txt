@@ -9,11 +9,19 @@ anyio==4.11.0
     #   httpx
     #   starlette
     #   watchfiles
+argon2-cffi==25.1.0
+    # via backend (pyproject.toml)
+argon2-cffi-bindings==25.1.0
+    # via argon2-cffi
+asyncpg==0.30.0
+    # via backend (pyproject.toml)
 certifi==2025.11.12
     # via
     #   httpcore
     #   httpx
     #   sentry-sdk
+cffi==2.0.0
+    # via argon2-cffi-bindings
 click==8.3.1
     # via
     #   rich-toolkit
@@ -62,6 +70,8 @@ mdurl==0.1.2
     # via markdown-it-py
 orjson==3.11.4
     # via fastapi
+pycparser==2.23
+    # via cffi
 pydantic==2.12.4
     # via
     #   fastapi
@@ -78,6 +88,7 @@ pygments==2.19.2
     # via rich
 python-dotenv==1.2.1
     # via
+    #   backend (pyproject.toml)
     #   pydantic-settings
     #   uvicorn
 python-multipart==0.0.20
